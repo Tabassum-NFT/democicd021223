@@ -11,9 +11,11 @@ export class DemoawspipelineStack extends cdk.Stack {
     //AWS CI_CD Pipeline
 
     const democicdpipeline = new CodePipeline(this, 'demopipeline', {
-      synth: new ShellStep('Synth', {
-        input: CodePipelineSource.gitHub('', 'main'),
-        commands: [
+       synth: new ShellStep('Synth', {
+        input: CodePipelineSource.gitHub('Tabassum-NFT/democicd021223', 'main', {
+          authentication: cdk.SecretValue.secretsManager('github-token')
+        }),
+       commands: [
           'npm ci',
           'npm run build',
           'npx cdk synth',
